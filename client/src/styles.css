@@ -11,6 +11,7 @@
   .print-cards .id-card{display:block!important}
 }
 
+<<<<<<< HEAD
 
 /* Customer card studio */
 .text-button{display:block;text-align:center;color:#167044;text-decoration:none;font-size:12px;font-weight:700;margin-top:13px;background:transparent;border:0;width:100%}
@@ -44,3 +45,45 @@
 .order-form .fields{margin-top:8px}
 @media(max-width:900px){.studio-grid{grid-template-columns:1fr}.preview-panel{position:static}}
 @media(max-width:600px){.studio-shell{padding:18px 12px}.studio-header{align-items:flex-start}.studio-header h1{font-size:21px}.studio-header .btn{font-size:0}.studio-header .btn svg{width:18px}.studio-grid{display:block}}
+=======
+/* Donor ID Card Blood Drop Fix */
+.drop {
+  position: relative;
+  width: 100px;
+  height: 112px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.drop svg {
+  position: absolute;
+  width: 82px;
+  height: 82px;
+  fill: #c51e2b;
+  stroke: #c51e2b;
+}
+
+.drop b {
+  position: absolute;
+  top: 34px;
+  z-index: 2;
+  color: white;
+  font-size: 21px;
+  font-weight: 800;
+  margin: 0;
+}
+
+.drop small {
+  position: absolute;
+  bottom: 4px;
+  z-index: 2;
+  background: #c51e2b;
+  color: white;
+  border-radius: 15px;
+  padding: 4px 7px;
+  font-size: 8px;
+  margin: 0;
+}
+>>>>>>> 8c310ee99bf1474734a2671225b7506f5dcd95a5

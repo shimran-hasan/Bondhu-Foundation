@@ -5,12 +5,16 @@ import helmet from "helmet";
 import { connectDB } from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import donorRoutes from "./routes/donorRoutes.js";
+<<<<<<< HEAD
 import customerRoutes from "./routes/customerRoutes.js";
 import printOrderRoutes from "./routes/printOrderRoutes.js";
+=======
+>>>>>>> 8c310ee99bf1474734a2671225b7506f5dcd95a5
 import { protect } from "./middleware/auth.js";
 
 const app = express();
 app.use(helmet());
+<<<<<<< HEAD
 app.use(cors({
   origin: [
     "http://localhost:5173",
@@ -24,6 +28,13 @@ app.use("/api/auth", authRoutes);
 app.use("/api/customers", customerRoutes);
 app.use("/api/donors", protect, donorRoutes);
 app.use("/api/print-orders", protect, printOrderRoutes);
+=======
+app.use(cors({ origin: process.env.CLIENT_URL || "http://localhost:5173" }));
+app.use(express.json({ limit: "2mb" }));
+app.get("/api/health", (_req, res) => res.json({ status: "ok", service: "Bondhu Foundation API" }));
+app.use("/api/auth", authRoutes);
+app.use("/api/donors", protect, donorRoutes);
+>>>>>>> 8c310ee99bf1474734a2671225b7506f5dcd95a5
 app.use((err, _req, res, _next) => {
   console.error(err);
   if (err.name === "ValidationError") return res.status(400).json({ message: err.message });

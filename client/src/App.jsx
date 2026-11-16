@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 import React from "react";
 import { useEffect, useMemo, useState } from "react";
 import { QRCodeSVG } from "qrcode.react";
 import { Activity, BadgeCheck, Droplet, HeartPulse, LogOut, Plus, Printer, Search, ShieldCheck, Trash2, Users, X, ShoppingBag } from "lucide-react";
+=======
+
+import React from "react";
+import { useEffect, useMemo, useState } from "react";
+import { QRCodeSVG } from "qrcode.react";
+import { Activity, BadgeCheck, Droplet, HeartPulse, LogOut, Plus, Printer, Search, ShieldCheck, Trash2, Users, X } from "lucide-react";
+>>>>>>> 8c310ee99bf1474734a2671225b7506f5dcd95a5
 import api from "./api";
 
 const empty = { donorId:"", name:"", phone:"", bloodGroup:"B+", membership:"Silver", joinDate:new Date().toISOString().slice(0,10), expiryDate:"", photoUrl:"", signature:"Authorized Signature", status:"Active", notes:"" };
@@ -11,7 +19,11 @@ const fmt = v => v ? new Date(v).toLocaleDateString("en-GB",{day:"2-digit",month
 function Login({ onLogin }) {
   const [email,setEmail]=useState("admin@bondhu.local"),[password,setPassword]=useState(""),[error,setError]=useState(""),[busy,setBusy]=useState(false);
   async function submit(e){e.preventDefault();setBusy(true);setError("");try{const {data}=await api.post("/auth/login",{email,password});localStorage.setItem("bondhu_token",data.token);onLogin(data.admin);}catch(err){setError(err.response?.data?.message||"Could not connect to API. Check server and MongoDB.");}finally{setBusy(false);}}
+<<<<<<< HEAD
   return <div className="login-page"><form className="login-card" onSubmit={submit}><div className="logo">✦</div><p className="kicker">BONDHU FOUNDATION</p><h1>Admin sign in</h1><p className="muted">Sign in to manage blood donor records.</p><label>Email address<input type="email" value={email} onChange={e=>setEmail(e.target.value)} required/></label><label>Password<input type="password" value={password} onChange={e=>setPassword(e.target.value)} required placeholder="Enter admin password"/></label>{error&&<div className="error">{error}</div>}<button className="btn primary full" disabled={busy}>{busy?"Signing in…":"Sign in to dashboard"}</button><small className="muted">Create your admin account with the server seed command.</small><a className="text-button" href="/studio">Customer? Design and order an ID card →</a></form></div>;
+=======
+  return <div className="login-page"><form className="login-card" onSubmit={submit}><div className="logo">✦</div><p className="kicker">BONDHU FOUNDATION</p><h1>Admin sign in</h1><p className="muted">Sign in to manage blood donor records.</p><label>Email address<input type="email" value={email} onChange={e=>setEmail(e.target.value)} required/></label><label>Password<input type="password" value={password} onChange={e=>setPassword(e.target.value)} required placeholder="Enter admin password"/></label>{error&&<div className="error">{error}</div>}<button className="btn primary full" disabled={busy}>{busy?"Signing in…":"Sign in to dashboard"}</button><small className="muted">Create your admin account with the server seed command.</small></form></div>;
+>>>>>>> 8c310ee99bf1474734a2671225b7506f5dcd95a5
 }
 
 function DonorCard({donor,side}) {
@@ -31,12 +43,19 @@ function DonorCard({donor,side}) {
 export default function App(){
  const [admin,setAdmin]=useState(null),[checking,setChecking]=useState(true),[rows,setRows]=useState([]),[stats,setStats]=useState({total:0,active:0,inactive:0,groups:[]});
  const [page,setPage]=useState(1),[pages,setPages]=useState(1),[search,setSearch]=useState(""),[blood,setBlood]=useState(""),[status,setStatus]=useState("");
+<<<<<<< HEAD
  const [form,setForm]=useState(empty),[editing,setEditing]=useState(null),[modal,setModal]=useState(false),[card,setCard]=useState(null),[cardSide,setCardSide]=useState("front"),[notice,setNotice]=useState(""),[busy,setBusy]=useState(false),[printOrders,setPrintOrders]=useState([]);
  useEffect(()=>{const token=localStorage.getItem("bondhu_token");if(!token){setChecking(false);return;}api.get("/auth/me").then(r=>setAdmin(r.data.admin)).catch(()=>localStorage.removeItem("bondhu_token")).finally(()=>setChecking(false));},[]);
  async function load(){if(!admin)return;setBusy(true);try{const [d,s]=await Promise.all([api.get("/donors",{params:{page,limit:20,search,bloodGroup:blood,status}}),api.get("/donors/stats")]);setRows(d.data.items);setPages(Math.max(1,d.data.pagination.pages));setStats(s.data);}catch(e){setNotice(e.response?.data?.message||"Could not load donor records.");}finally{setBusy(false);}}
  useEffect(()=>{load();},[admin,page,search,blood,status]);
  useEffect(()=>{if(admin) api.get("/print-orders").then(r=>setPrintOrders(r.data.orders||[])).catch(()=>{});},[admin]);
  async function updatePrintStatus(id,nextStatus){try{await api.patch(`/print-orders/${id}/status`,{status:nextStatus});const r=await api.get("/print-orders");setPrintOrders(r.data.orders||[]);setNotice("Print order status updated.");}catch(e){setNotice(e.response?.data?.message||"Could not update print order.");}}
+=======
+ const [form,setForm]=useState(empty),[editing,setEditing]=useState(null),[modal,setModal]=useState(false),[card,setCard]=useState(null),[cardSide,setCardSide]=useState("front"),[notice,setNotice]=useState(""),[busy,setBusy]=useState(false);
+ useEffect(()=>{const token=localStorage.getItem("bondhu_token");if(!token){setChecking(false);return;}api.get("/auth/me").then(r=>setAdmin(r.data.admin)).catch(()=>localStorage.removeItem("bondhu_token")).finally(()=>setChecking(false));},[]);
+ async function load(){if(!admin)return;setBusy(true);try{const [d,s]=await Promise.all([api.get("/donors",{params:{page,limit:20,search,bloodGroup:blood,status}}),api.get("/donors/stats")]);setRows(d.data.items);setPages(Math.max(1,d.data.pagination.pages));setStats(s.data);}catch(e){setNotice(e.response?.data?.message||"Could not load donor records.");}finally{setBusy(false);}}
+ useEffect(()=>{load();},[admin,page,search,blood,status]);
+>>>>>>> 8c310ee99bf1474734a2671225b7506f5dcd95a5
  function logout(){localStorage.removeItem("bondhu_token");setAdmin(null);}
  async function openNew(){try{const {data}=await api.get("/donors/next-id");setForm({...empty,donorId:data.donorId});setEditing(null);setModal(true);}catch(e){setNotice("Could not generate donor ID.");}}
  function openEdit(d){setForm({...d,joinDate:d.joinDate?.slice(0,10)||"",expiryDate:d.expiryDate?.slice(0,10)||""});setEditing(d._id);setModal(true);}
@@ -46,7 +65,11 @@ export default function App(){
  const bloodCounts=useMemo(()=>stats.groups||[],[stats]);
  if(checking)return <div className="loading">Loading Bondhu dashboard…</div>;
  if(!admin)return <Login onLogin={setAdmin}/>;
+<<<<<<< HEAD
  return <div className="layout"><aside className="sidebar"><div className="side-brand"><div className="brand-symbol">✦</div><div><b>Bondhu Foundation</b><small>Donor Management</small></div></div><p className="nav-label">WORKSPACE</p><div className="nav-active"><Users size={18}/> Donor Management</div><a className="nav-link" href="/studio"><ShoppingBag size={17}/> Customer Card Studio</a><div className="sidebar-tip"><ShieldCheck/> <span>Secure admin workspace. Donor records are stored in MongoDB.</span></div><button className="logout" onClick={logout}><LogOut size={17}/> Sign out</button></aside>
+=======
+ return <div className="layout"><aside className="sidebar"><div className="side-brand"><div className="brand-symbol">✦</div><div><b>Bondhu Foundation</b><small>Donor Management</small></div></div><p className="nav-label">WORKSPACE</p><div className="nav-active"><Users size={18}/> Donor Management</div><div className="sidebar-tip"><ShieldCheck/> <span>Secure admin workspace. Donor records are stored in MongoDB.</span></div><button className="logout" onClick={logout}><LogOut size={17}/> Sign out</button></aside>
+>>>>>>> 8c310ee99bf1474734a2671225b7506f5dcd95a5
  <main className="main"><header className="top"><div><p className="kicker">MANAGEMENT / DONORS</p><h1>Donor Management</h1><p className="muted">Manage, search and issue donor identity cards.</p></div><button className="btn primary" onClick={openNew}><Plus size={17}/> Add donor</button></header>
  <section className="stats"><div className="stat"><Users/><small>Total donors</small><b>{stats.total.toLocaleString()}</b></div><div className="stat"><HeartPulse/><small>Active donors</small><b>{stats.active.toLocaleString()}</b></div><div className="stat"><BadgeCheck/><small>Inactive donors</small><b>{stats.inactive.toLocaleString()}</b></div><div className="stat"><Droplet/><small>Blood groups</small><b>{bloodCounts.length}</b></div></section>
  {notice&&<div className="notice">{notice}<button onClick={()=>setNotice("")}><X size={15}/></button></div>}
@@ -54,7 +77,10 @@ export default function App(){
  <div className="table-wrap"><table><thead><tr><th>DONOR</th><th>DONOR ID</th><th>BLOOD</th><th>MEMBERSHIP</th><th>STATUS</th><th>ACTIONS</th></tr></thead><tbody>{rows.map(d=><tr key={d._id}><td><b>{d.name}</b><small>{d.phone}</small></td><td>{d.donorId}</td><td><span className="blood">{d.bloodGroup}</span></td><td>{d.membership}</td><td><span className={`status ${d.status==="Active"?"on":"off"}`}>{d.status}</span></td><td className="actions"><button onClick={()=>openEdit(d)}>Edit</button><button onClick={()=>{setCard(d);setCardSide("front")}}>ID Card</button><button className="danger" onClick={()=>remove(d._id)}><Trash2 size={14}/></button></td></tr>)}{!rows.length&&<tr><td colSpan="6" className="empty">{busy?"Loading records…":"No donors found."}</td></tr>}</tbody></table></div>
  <div className="pagination"><span>Page {page} of {pages} · {stats.total.toLocaleString()} total donors</span><div><button disabled={page<=1} onClick={()=>setPage(p=>p-1)}>Previous</button><button disabled={page>=pages} onClick={()=>setPage(p=>p+1)}>Next</button></div></div>
  </section>
+<<<<<<< HEAD
  <section className="panel"><div className="panel-title"><div><h2>Student ID Print Orders</h2><p className="muted">Customer-submitted card printing requests</p></div><span className="status on">{printOrders.length} orders</span></div><div className="table-wrap"><table><thead><tr><th>CUSTOMER</th><th>INSTITUTION</th><th>STUDENT</th><th>QTY</th><th>DELIVERY</th><th>STATUS</th></tr></thead><tbody>{printOrders.map(o=><tr key={o._id}><td><b>{o.customer?.name||"Customer"}</b><small>{o.customer?.email}</small></td><td>{o.design?.institutionName||"—"}</td><td>{o.design?.studentName||"—"}<small>{o.design?.studentId}</small></td><td>{o.quantity}</td><td>{o.deliveryName}<small>{o.phone} · {o.address}</small></td><td><select value={o.status} onChange={e=>updatePrintStatus(o._id,e.target.value)}>{["Pending","Approved","Printing","Shipped","Delivered","Cancelled"].map(x=><option key={x}>{x}</option>)}</select></td></tr>)}{!printOrders.length&&<tr><td colSpan="6" className="empty">No student card print orders yet.</td></tr>}</tbody></table></div></section>
+=======
+>>>>>>> 8c310ee99bf1474734a2671225b7506f5dcd95a5
  <section className="panel group-panel"><h2>Donors by blood group</h2><div className="group-list">{bloodCounts.map(g=><div key={g._id}><span>{g._id}</span><b>{g.count.toLocaleString()}</b></div>)}</div></section>
  <footer>© {new Date().getFullYear()} Bondhu Foundation · Give blood, save life.</footer></main>
  {modal&&<div className="overlay"><form className="modal" onSubmit={save}><div className="modal-head"><div><h2>{editing?"Edit donor":"Add new donor"}</h2><p className="muted">Donor details are stored in MongoDB.</p></div><button type="button" className="close" onClick={()=>setModal(false)}><X/></button></div><div className="fields"><label>Donor ID<input value={form.donorId} onChange={e=>change("donorId",e.target.value)} required/></label><label>Full name<input value={form.name} onChange={e=>change("name",e.target.value)} required/></label><label>Phone<input value={form.phone} onChange={e=>change("phone",e.target.value)} required/></label><label>Blood group<select value={form.bloodGroup} onChange={e=>change("bloodGroup",e.target.value)}>{["A+","A-","B+","B-","AB+","AB-","O+","O-"].map(x=><option key={x}>{x}</option>)}</select></label><label>Membership<select value={form.membership} onChange={e=>change("membership",e.target.value)}>{["General","Silver","Gold","Platinum"].map(x=><option key={x}>{x}</option>)}</select></label><label>Status<select value={form.status} onChange={e=>change("status",e.target.value)}><option>Active</option><option>Inactive</option></select></label><label>Join date<input type="date" value={form.joinDate} onChange={e=>change("joinDate",e.target.value)}/></label><label>Expiry date<input type="date" value={form.expiryDate} onChange={e=>change("expiryDate",e.target.value)}/></label><label className="wide">Photo URL<input value={form.photoUrl} onChange={e=>change("photoUrl",e.target.value)} placeholder="https://example.com/photo.jpg"/></label><label className="wide">Signature text<input value={form.signature} onChange={e=>change("signature",e.target.value)}/></label></div><div className="modal-actions"><button type="button" className="btn soft" onClick={()=>setModal(false)}>Cancel</button><button className="btn primary">Save donor</button></div></form></div>}

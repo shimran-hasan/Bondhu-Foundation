@@ -83,6 +83,7 @@ Deploy the API and frontend separately. Set `VITE_API_URL` in the frontend hosti
 - QR code currently encodes donor identity fields. For public verification, replace it with a signed, opaque verification token and a public verification endpoint; do not expose phone numbers in public QR payloads.
 - Confirm organization details, eligibility guidance and card terms with Bondhu Foundation before issuing cards.
 - This is a starter project, not a certified medical or identity verification system.
+<<<<<<< HEAD
 
 
 ## Student ID Card Design & Printing module
@@ -101,3 +102,5 @@ The `/studio` route is a customer-facing card studio. Customers can register/sig
 - Backend: set `CLIENT_URL` to the exact deployed frontend origin.
 - The customer card studio currently accepts photo/logo URLs; image file upload/storage (Cloudinary or S3) should be configured before production use.
 - Pricing and payment are not integrated; the order request is submitted for the admin team to confirm price and delivery with the customer.
+=======
+>>>>>>> 8c310ee99bf1474734a2671225b7506f5dcd95a5
