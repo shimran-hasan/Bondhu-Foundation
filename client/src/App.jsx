@@ -243,3 +243,4 @@ function DonorCard({ donor, side }) {
     </div>
   );
 }
+export default App;
